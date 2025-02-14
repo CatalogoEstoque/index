@@ -78,11 +78,11 @@
            align-items: left;
 	   margin-left: 100px; /* Garante que o conteúdo fique ao lado da sidebar */
            margin-top: 80px;
-           //display: grid;
-           //grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-           //gap: 10px;
+           display: grid;
+           grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+           gap: 10px;
            padding: 1px;
-	   //margin: 5px;
+	   margin: 5px;
 	   width: 80%;
            margin-left: 100px; /* Ajuste conforme a largura da sidebar */
         }
@@ -96,37 +96,42 @@
            width: 100%; /* Ajustes adicionais para telas menores */
   }
 	.header {
-           height: auto;  /* Outros ajustes necessários */
+        height: auto;  /* Outros ajustes necessários */
   }
-/*       }*/
-/*        .product {            */
-/*           width: 90%;        */                                    /* Mantém a largura responsiva */
-/*           max-width: 600px;  */                                    /* Define um limite para não ficar muito largo */
-/*           height: 50px;      */
-/*           display: flex;     */
-/*           align-items: center;*/
-/*           gap: 10px;*/
-/*           padding: 5px 15px;*/
-/*           background: linear-gradient(135deg, #1e1e1e, #3a3a3a);  */                            /* Gradiente escuro futurista */
-/*           border-radius: 10px;   */                                                             /* Bordas mais suaves */
-/*           box-shadow: 0 0 10px rgba(0, 255, 255, 0.6), 0 0 20px rgba(0, 255, 255, 0.3) inset;*/ /* Efeito de brilho */
-/*           border: 2px solid rgba(0, 255, 255, 0.8);  */                                         /* Bordas neon */
-/*           color: #fff; */                                                                       /* Texto branco para contraste */
-/*           font-weight: bold;*/
-/*           text-transform: uppercase;*/
-/*           transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;*/
-
-/*   }*/
+       }
+        .product {
+		  width: 90%; /* Ajusta a largura para ocupar quase toda a tela */
+          max-width: 600px; /* Define um limite para não ficar muito largo */
+          height: auto; /* Ajusta a altura conforme o conteúdo */
+          text-align: left;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          padding: 2px;
+		
+            background: #fff;
+            border-radius: 0px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            padding: 0px;
+            transform: scale(1.3);
+			//transition: transform 0.5s ease-in-out;
+            width: 520px;   
+            height: 50px;
+            
+        }
         .product img {
-	   width: 80px; /* Redimensiona a imagem */
+		   width: 80px; /* Redimensiona a imagem */
            height: 50px;
            object-fit: cover;
-           border-radius: 5px;	
-         //width: 100px;
-         //max-height: 200px;
-         //object-fit: cover;
-         //border-radius: 0px;
-         //margin-bottom: 0px;
+           border-radius: 5px;
+		
+           width: 100px;
+           max-height: 200px;
+           object-fit: cover;
+           border-radius: 0px;
+           margin-bottom: 0px;
         }
         .product:hover {
             transform: translateY(-5px);
