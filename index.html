@@ -154,6 +154,7 @@
 
     <div class="sidebar">
         <h3>Catálogo de Produtos</h3>
+        <p id="active-filter">Filtro ativo: Nenhum</p>
         <p id="total-count"></p>
         <p id="filtered-count">Total de itens: 0</p> 
         <div class="categories" id="categoryButtons">
@@ -203,6 +204,7 @@
 
     function filterCategory(category) {
         selectedCategory = category;
+        document.getElementById("active-filter").innerText = `Filtro ativo: ${category}`;
         applyFilters();
     }
 
