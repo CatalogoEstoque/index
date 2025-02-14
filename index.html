@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Produtos</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+    <style>
+         body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            font-size: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #444;
+        }
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 50px;
+            background: #fff;
+            padding: 10px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            height: calc(100vh - 100px);
+			width: 70px;   
+            height: 780px;
+        }
+
+        .categories {
+            display: flex;
+            flex-direction: column;
+        }
+        .category {
+            padding: 5px;
+            margin: 2px 0;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1em;
+            text-align: center;
+        }
+
+        .category:hover {
+            background-color: #0056b3;
+        }
+        .filters-container {
+            position: fixed;
+            top: 0;
+            left: 0px;
+            right: 0;
+            background: black;
+            //padding: 20px;
+            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: left;
+            gap: 2px;
+            padding: 10px 5px; /* Aumenta a área de clique */
+            font-size: 20px; /* Aumenta o tamanho do texto */
+            height: 30px; /* Define uma altura fixa */
+            min-width: 50px; /* Define uma largura mínima */
+
+        }
+        .filters input {
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .container {
+	   display: flex;
+           flex-direction: column;
+           align-items: left;
+	   margin-left: 100px; /* Garante que o conteúdo fique ao lado da sidebar */
+           margin-top: 80px;
+           //display: grid;
+           //grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+           //gap: 10px;
+           padding: 1px;
+	   //margin: 5px;
+	   width: 80%;
+           margin-left: 100px; /* Ajuste conforme a largura da sidebar */
+        }
+
+  /* Ajuste para telas menores */
+       @media (max-width: 768px) {
+        .sidebar {
+           width: 100px; /* Sidebar menor em telas pequenas */
+        }
+       .container {
+           width: 100%; /* Ajustes adicionais para telas menores */
+  }
+	.header {
+        height: auto;  /* Outros ajustes necessários */
+  }
+       }
+        .product {
+		  width: 90%; /* Ajusta a largura para ocupar quase toda a tela */
+          max-width: 600px; /* Define um limite para não ficar muito largo */
+          height: auto; /* Ajusta a altura conforme o conteúdo */
+          text-align: left;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          padding: 2px;
+		
+            background: #fff;
+            border-radius: 0px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            //overflow: hidden;
+            //text-align: center;
+            padding: 0px;
+            ////transform: scale(1.3);
+			//transition: transform 0.5s ease-in-out;
+            width: 520px;   
+            height: 50px;
+            
+        }
+        .product img {
+		   width: 80px; /* Redimensiona a imagem */
+           height: 50px;
+           object-fit: cover;
+           border-radius: 5px;
+		
+            //width: 100px;
+            //max-height: 200px;
+            //object-fit: cover;
+            //border-radius: 0px;
+            //margin-bottom: 0px;
+        }
+        .product:hover {
+            transform: translateY(-5px);
+            
+        }
+        
+        .product img.zoom {
+           transform: scale(5.0); /* Zoom */
+           transition: transform 0.3s ease;
+         }
+.img {
+  max-width: 100%;
+  height: auto;
+}
+
+      
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h3>Catálogo de Produtos</h3>
+        <p id="total-count"></p>
+        <p id="filtered-count">Total de itens: 0</p> 
+        <div class="categories" id="categoryButtons">
+            <button class="category" onclick="filterCategory('Escritório')">Escritório</button>
+            <button class="category" onclick="filterCategory('EPI')">EPI</button>
+            <button class="category" onclick="filterCategory('Expedição')">Expedição</button>
+            <button class="category" onclick="filterCategory('Manutenção')">Manutenção</button>
+            <button class="category" onclick="filterCategory('Limpeza')">Limpeza</button>
+            <button class="category" onclick="clearCategory()">Todos</button>
+        </div>
+    </div>
+
+    <div class="filters-container">
+        <input type="text" id="filterCode" placeholder="Filtrar por Código" oninput="applyFilters()">
+        <input type="text" id="filterDescription" placeholder="Filtrar por Descrição" oninput="applyFilters()">
+        <input type="text" id="filterLocation" placeholder="Filtrar por Localização" oninput="applyFilters()">
+    </div>
+    
+    <div class="container" id="product-list"></div>
+
+    
+    <script>
+    let allProducts = [];
+    let selectedCategory = "";
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // URL do arquivo no GitHub
+        const fileUrl = "https://raw.githubusercontent.com/flavioalves2589/estoque/main/json.XLSX";
+
+        fetch(fileUrl)
+            .then(response => response.arrayBuffer())
+            .then(data => {
+                const workbook = XLSX.read(new Uint8Array(data), { type: "array" });
+
+                // Pegando a primeira aba do arquivo
+                const sheetName = workbook.SheetNames[0];
+                const sheet = workbook.Sheets[sheetName];
+
+                // Convertendo os dados para JSON
+                allProducts = XLSX.utils.sheet_to_json(sheet);
+
+                // Exibir os produtos assim que o arquivo for carregado
+                renderProducts(allProducts);
+            })
+            .catch(error => console.error("Erro ao carregar o arquivo:", error));
+    });
+
+    function filterCategory(category) {
+        selectedCategory = category;
+        applyFilters();
+    }
+
+    function clearCategory() {
+        selectedCategory = "";
+        applyFilters();
+    }
+
+    function applyFilters() {
+        const codeFilter = document.getElementById("filterCode").value.toLowerCase();
+        const descriptionFilter = document.getElementById("filterDescription").value.toLowerCase();
+        const locationFilter = document.getElementById("filterLocation").value.toLowerCase();
+
+        let filteredProducts = allProducts;
+
+        if (selectedCategory) {
+            filteredProducts = filteredProducts.filter(product => product["Categoria"] === selectedCategory);
+        }
+        if (codeFilter) {
+            filteredProducts = filteredProducts.filter(product => String(product.Material).toLowerCase().includes(codeFilter));
+        }
+        if (descriptionFilter) {
+            filteredProducts = filteredProducts.filter(product => String(product.TxtBreveMaterial).toLowerCase().includes(descriptionFilter));
+        }
+        if (locationFilter) {
+            filteredProducts = filteredProducts.filter(product => String(product["Pos.dpst."]).toLowerCase().includes(locationFilter));
+        }
+
+        document.getElementById("filtered-count").innerText = `Total Filtro: ${filteredProducts.length}`;
+
+        renderProducts(filteredProducts);
+    }
+
+    function renderProducts(products) {
+        const productList = document.getElementById("product-list");
+        productList.innerHTML = "";
+
+        if (products.length === 0) {
+            productList.innerHTML = "<p>Nenhum produto encontrado.</p>";
+            return;
+        }
+
+        products.forEach(product => {
+            const div = document.createElement("div");
+            div.classList.add("product");
+            div.innerHTML = `
+                <img src="${product.Imagem ?? 'placeholder.jpg'}" onclick="zoomImage(this)">
+                <h2>${product.Material ?? 'Material não especificado'}</h2>
+                <p><strong>Descrição:</strong> ${product.TxtBreveMaterial ?? 'Sem descrição'}</p>
+                //<p><strong>Saldo:</strong> ${product["Util.livre"] ?? 0}</p>
+                <p><strong>Unidade:</strong> ${product.UMB ?? 'N/A'}</p>
+                <p><strong>Posição:</strong> ${product["Pos.dpst."] ?? 'Não definida'}</p>
+            `;
+            productList.appendChild(div);
+        });
+
+        console.log("Total de itens na lista:", allProducts.length);
+        document.getElementById("total-count").innerText = `Total de itens: ${allProducts.length}`;
+    }
+
+    function zoomImage(image) {
+        image.classList.toggle("zoom");
+    }
+</script>
+
+</body>
+</html>
