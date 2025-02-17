@@ -26,7 +26,7 @@
             padding: 10px;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
             height: calc(100vh - 100px);
-			width: 70px;   
+            width: 70px;   
             height: 780px;
         }
 
@@ -55,7 +55,6 @@
             left: 0px;
             right: 0;
             background: black;
-            //padding: 20px;
             box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: left;
@@ -85,12 +84,9 @@
     width: 80%;
     background: #f4f4f4; /* Cor de fundo para destacar o quadro */
     border-radius: 10px; /* Bordas arredondadas */
-    //box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Sombra leve */
-    //border: 2px solid black; /* Adiciona bordas pretas */
 }
 
-/* Ajuste para telas menores */
-       @media (max-width: 768px) {
+@media (max-width: 768px) {
         .sidebar {
            width: 100px; /* Sidebar menor em telas pequenas */
         }
@@ -131,15 +127,8 @@
            height: 50px;
            object-fit: cover;
            border-radius: 5px;
-		
-            //width: 100px;
-            //max-height: 200px;
-            //object-fit: cover;
-            //border-radius: 0px;
-            //margin-bottom: 0px;
         }
-        
-        
+
         .product img.zoom {
            transform: scale(5.0); /* Zoom */
            transition: transform 0.3s ease;
@@ -150,17 +139,17 @@
   height: auto;
 }
 
-      
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <h3>Catálogo de Produtos</h3>
+        <h3 style="text-align: center;">Catálogo de Produtos</h3>
         <p id="active-filter">Filtro ativo: Nenhum</p>
         <p id="total-count"></p>
         <p id="filtered-count">Total de itens: 0</p> 
         <div class="categories" id="categoryButtons">
+            <button class="category" onclick="clearCategory()">Limpar Filtros</button>
             <button class="category" onclick="filterCategory('Escritório')">Escritório</button>
             <button class="category" onclick="filterCategory('EPI')">EPI</button>
             <button class="category" onclick="filterCategory('Insumos')">Insumos</button>
@@ -169,8 +158,23 @@
             <button class="category" onclick="filterCategory('Tintas')">Tintas</button>
             <button class="category" onclick="filterCategory('Manutenção')">Manutenção</button>
             <button class="category" onclick="filterCategory('Limpeza')">Limpeza</button>
-            <button class="category" onclick="clearCategory()">Todos</button>
+            
         </div>
+
+        <h3 style="text-align: center;">Formato</h3>
+        
+        <div class="categories" id="formatCategoryButtons">
+            <button class="category" onclick="filterFormat('28xx1.19')">28x1.19</button>
+            <button class="category" onclick="filterFormat('60x1.20')">60x1.20</button>
+            <button class="category" onclick="filterFormat('80x80')">80x80</button>
+            <button class="category" onclick="filterFormat('1.00x1.00')">1.00x1.00</button>
+            <button class="category" onclick="filterFormat('1.20x1.20')">1.20x1.20</button>
+            <button class="category" onclick="filterFormat('80x1.60')">80x1.60</button>
+            <button class="category" onclick="filterFormat('26x1.60')">26x1.60</button>
+            <button class="category" onclick="filterFormat('90x90')">90x90</button>
+            <button class="category" onclick="filterFormat('45x65')">45x65</button>
+            <!-- Adicione mais formatos conforme necessário -->
+        </div> 
     </div>
 
     <div class="filters-container">
@@ -181,10 +185,10 @@
     
     <div class="container" id="product-list"></div>
 
-    
     <script>
     let allProducts = [];
     let selectedCategory = "";
+    let selectedFormat = "";
 
     document.addEventListener("DOMContentLoaded", function () {
         // URL do arquivo no GitHub
@@ -214,8 +218,15 @@
         applyFilters();
     }
 
+    function filterFormat(format) {
+        selectedFormat = format;
+        document.getElementById("active-filter").innerText = `Filtro ativo: ${selectedCategory} ${selectedFormat ? ' | Formato: ' + selectedFormat : ''}`;
+        applyFilters();
+    }
+
     function clearCategory() {
         selectedCategory = "";
+        selectedFormat = "";
         applyFilters();
     }
 
@@ -228,6 +239,9 @@
 
         if (selectedCategory) {
             filteredProducts = filteredProducts.filter(product => product["Categoria"] === selectedCategory);
+        }
+        if (selectedFormat) {
+            filteredProducts = filteredProducts.filter(product => product["Formato"] && product["Formato"].toLowerCase() === selectedFormat.toLowerCase());
         }
         if (codeFilter) {
             filteredProducts = filteredProducts.filter(product => String(product.Material).toLowerCase().includes(codeFilter));
@@ -259,22 +273,17 @@
             div.innerHTML = `
                 <img src="${product.Imagem ?? 'placeholder.jpg'}" onclick="zoomImage(this)">
                 <h2>${product.Material ?? 'Material não especificado'}</h2>
-                <p><strong></strong> ${product.TxtBreveMaterial ?? 'Sem descrição'}</p>
-            <!-- <p><strong>Saldo:</strong> ${product["Util.livre"] ?? 0}</p> -->
-                <p><strong>Unidade:</strong> ${product.UMB ?? 'N/A'}</p>
-                <p><strong>Posição:</strong> ${product["Pos.dpst."] ?? 'Não definida'}</p>
+                <p>${product.TxtBreveMaterial ?? 'Descrição não disponível'}</p>
+                <p>${product['Pos.dpst.'] ?? 'Localização não informada'}</p>
             `;
             productList.appendChild(div);
         });
-
-        console.log("Total de itens na lista:", allProducts.length);
-        document.getElementById("total-count").innerText = `Total de itens: ${allProducts.length}`;
     }
 
-    function zoomImage(image) {
-        image.classList.toggle("zoom");
+    function zoomImage(img) {
+        img.classList.toggle("zoom");
     }
-</script>
+    </script>
 
 </body>
 </html>
