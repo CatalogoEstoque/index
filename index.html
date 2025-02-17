@@ -263,7 +263,7 @@ document.addEventListener("DOMContentLoaded", function () {
             filteredProducts = filteredProducts.filter(product => String(product["Pos.dpst."]).toLowerCase().includes(locationFilter));
         }
 
-        document.getElementById("filtered-count").innerText = Total Filtro: ${filteredProducts.length};
+       document.getElementById("filtered-count").innerText =  `Total Filtro: ${filteredProducts.length}`;
 
         renderProducts(filteredProducts);
     }
