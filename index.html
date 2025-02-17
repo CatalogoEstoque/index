@@ -229,7 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function filterFormat(format) {
         selectedFormat = format;
-        document.getElementById("active-filter").innerText = Filtro ativo: ${selectedCategory} ${selectedFormat ? ' | Formato: ' + selectedFormat : ''};
+        document.getElementById("active-filter").innerText = `Filtro ativo: ${selectedCategory} ${selectedFormat ? ' | Formato: ' + selectedFormat : ''}`;
         applyFilters();
     }
 
