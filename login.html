@@ -1,36 +1,50 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-        .login-container { max-width: 300px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
-        input { width: 100%; margin: 10px 0; padding: 10px; }
-        button { width: 100%; padding: 10px; cursor: pointer; }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Login</h2>
-        <input type="text" id="username" placeholder="Usuário">
-        <input type="password" id="password" placeholder="Senha">
-        <button onclick="login()">Entrar</button>
-        <p id="error" style="color:red;"></p>
-    </div>
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Usuário">
+    <input type="password" id="password" placeholder="Senha">
+    <button onclick="login()">Entrar</button>
+    <p id="error" style="color: red;"></p>
 
     <script>
-        function login() {
-            const user = document.getElementById('username').value;
-            const pass = document.getElementById('password').value;
+        async function fetchUsers() {
+            try {
+                const response = await fetch("https://raw.githubusercontent.com/CatalogoEstoque/index/main/User.xlsx");
+                const arrayBuffer = await response.arrayBuffer();
+                const workbook = XLSX.read(arrayBuffer, { type: "array" });
+                const sheetName = workbook.SheetNames[0];
+                const sheet = workbook.Sheets[sheetName];
+                const data = XLSX.utils.sheet_to_json(sheet);
 
-            // Simulação de usuários (substituir por API ou JSON externo se necessário)
-            const users = { "admin": "1234", "user": "abcd" };
+                const users = {};
+                data.forEach(row => {
+                    if (row.username && row.password) {
+                        users[row.username.trim()] = row.password.trim();
+                    }
+                });
+
+                return users;
+            } catch (error) {
+                console.error("Erro ao carregar usuários:", error);
+                return {};
+            }
+        }
+
+        async function login() {
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
+            const users = await fetchUsers();
 
             if (users[user] && users[user] === pass) {
-                localStorage.setItem("loggedIn", "true"); // Salva login
-                window.location.href = "index.html"; // Redireciona para a página principal
+                localStorage.setItem("loggedIn", "true");
+                window.location.href = "index.html";
             } else {
                 document.getElementById('error').innerText = "Usuário ou senha inválidos!";
             }
