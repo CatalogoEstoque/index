@@ -110,6 +110,7 @@
         console.log("Tentando login com:", username, password); // 🛠 Mostra o login digitado
 
         if (users[username] && users[username] === password) {
+            localStorage.setItem("loggedIn", "true");
             alert("Login bem-sucedido!");
             window.location.href = "index.html";
         } else {
