@@ -106,13 +106,15 @@
                 .then(users => {
                     if (users[username] === password) {
                         alert("Login bem-sucedido!");
-                        // Redirecionar para a página de dados, por exemplo
+                        // Redirecionar para a página após login bem-sucedido
+                        window.location.href = "https://catalogoestoque.github.io/index/";
                     } else {
                         alert("Usuário ou senha incorretos!");
                     }
                 });
         }
 
+        // Função para chamar a validação do login
         function login() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
