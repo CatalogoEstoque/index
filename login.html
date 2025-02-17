@@ -73,7 +73,7 @@
     </div>
 
     <script>
-        // Função para carregar o arquivo CSV
+        // Função para carregar o arquivo CSV via proxy (evita bloqueios de CORS)
         async function loadCSV(url) {
             try {
                 const response = await fetch(url);
@@ -85,7 +85,7 @@
             }
         }
 
-        // Função para converter o CSV para um objeto
+        // Função para converter o CSV em um objeto
         function parseCSV(csvData) {
             const users = {};
             const rows = csvData.split('\n');
@@ -95,7 +95,9 @@
                 if (columns.length === 2) {
                     const username = columns[0].trim();  // Remove espaços extras
                     const password = columns[1].trim();  // Remove espaços extras
-                    users[username] = password;
+                    if (username !== "username" && password !== "password") { // Ignora cabeçalhos
+                        users[username] = password;
+                    }
                 }
             });
 
@@ -104,8 +106,10 @@
 
         // Função de validação de login
         async function validateLogin(username, password) {
-            const users = await loadCSV("https://raw.githubusercontent.com/CatalogoEstoque/index/main/User.csv");
+            const users = await loadCSV("https://api.allorigins.win/raw?url=https://raw.githubusercontent.com/CatalogoEstoque/index/main/User.csv");
             
+            console.log("Usuários carregados:", users); // Exibe usuários carregados para depuração
+
             if (users[username] && users[username] === password) {
                 alert("Login bem-sucedido!");
                 window.location.href = "https://catalogoestoque.github.io/index/";
