@@ -190,6 +190,11 @@
     <div class="container" id="product-list"></div>
 
     <script>
+
+    if (!localStorage.getItem("loggedIn")) {
+        window.location.href = "login.html"; // Redireciona se não estiver logado
+       }
+	    
     let allProducts = [];
     let selectedCategory = "";
     let selectedFormat = "";
