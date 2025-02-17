@@ -74,50 +74,50 @@
 
     <script>
         // Função para carregar o arquivo CSV
-        function loadCSV(url) {
-            return fetch(url)
-                .then(response => response.text()) // Lê o arquivo CSV como texto
-                .then(data => {
-                    const users = parseCSV(data);  // Converte o CSV em um objeto
-                    return users;  // Retorna o objeto de usuários
-                })
-                .catch(error => console.error('Erro ao carregar o arquivo CSV:', error));
+        async function loadCSV(url) {
+            try {
+                const response = await fetch(url);
+                const data = await response.text();
+                return parseCSV(data);
+            } catch (error) {
+                console.error('Erro ao carregar o arquivo CSV:', error);
+                return {};
+            }
         }
 
-        // Função para analisar o CSV e converter para um objeto de usuários
+        // Função para converter o CSV para um objeto
         function parseCSV(csvData) {
-            const rows = csvData.split('\n');  // Divide as linhas do CSV
-            const users = {};  // Objeto onde os usuários serão armazenados
+            const users = {};
+            const rows = csvData.split('\n');
 
             rows.forEach(row => {
-                const columns = row.split(';');  // Divide cada linha pelo ponto e vírgula
+                const columns = row.replace(/\r/g, '').split(';'); // Remove caracteres extras
                 if (columns.length === 2) {
-                    const [username, password] = columns;  // Atribui o usuário e a senha
-                    users[username] = password;  // Adiciona no objeto
+                    const username = columns[0].trim();  // Remove espaços extras
+                    const password = columns[1].trim();  // Remove espaços extras
+                    users[username] = password;
                 }
             });
 
             return users;
         }
 
-        // Função para validar o login
-        function validateLogin(username, password) {
-            loadCSV("https://raw.githubusercontent.com/CatalogoEstoque/index/main/User.csv")
-                .then(users => {
-                    if (users[username] === password) {
-                        alert("Login bem-sucedido!");
-                        // Redirecionar para a página após login bem-sucedido
-                        window.location.href = "https://catalogoestoque.github.io/index/";
-                    } else {
-                        alert("Usuário ou senha incorretos!");
-                    }
-                });
+        // Função de validação de login
+        async function validateLogin(username, password) {
+            const users = await loadCSV("https://raw.githubusercontent.com/CatalogoEstoque/index/main/User.csv");
+            
+            if (users[username] && users[username] === password) {
+                alert("Login bem-sucedido!");
+                window.location.href = "https://catalogoestoque.github.io/index/";
+            } else {
+                document.getElementById("error").innerText = "Usuário ou senha incorretos!";
+            }
         }
 
-        // Função para chamar a validação do login
+        // Função chamada ao clicar no botão de login
         function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
             validateLogin(username, password);
         }
     </script>
