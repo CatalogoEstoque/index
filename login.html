@@ -4,56 +4,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-   </head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
 <body>
-    <h2>Login</h2>
-    <input type="text" id="username" placeholder="Usuário">
-    <input type="password" id="password" placeholder="Senha">
-    <button onclick="login()">Entrar</button>
-    <p id="error" style="color: red;"></p>
+    <div class="login-container">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Usuário">
+        <input type="password" id="password" placeholder="Senha">
+        <button onclick="login()">Entrar</button>
+        <p id="error"></p>
+    </div>
 
     <script>
-       // Função para carregar o arquivo CSV
-function loadCSV(url) {
-    return fetch(url)
-        .then(response => response.text()) // Lê o arquivo CSV como texto
-        .then(data => {
-            const users = parseCSV(data);  // Converte o CSV em um objeto
-            return users;  // Retorna o objeto de usuários
-        })
-        .catch(error => console.error('Erro ao carregar o arquivo CSV:', error));
-}
-
-// Função para analisar o CSV e converter para um objeto de usuários
-function parseCSV(csvData) {
-    const rows = csvData.split('\n');  // Divide as linhas do CSV
-    const users = {};  // Objeto onde os usuários serão armazenados
-
-    rows.forEach(row => {
-        const columns = row.split(';');  // Divide cada linha pelo ponto e vírgula
-        if (columns.length === 2) {
-            const [username, password] = columns;  // Atribui o usuário e a senha
-            users[username] = password;  // Adiciona no objeto
+        // Função para carregar o arquivo CSV
+        function loadCSV(url) {
+            return fetch(url)
+                .then(response => response.text()) // Lê o arquivo CSV como texto
+                .then(data => {
+                    const users = parseCSV(data);  // Converte o CSV em um objeto
+                    return users;  // Retorna o objeto de usuários
+                })
+                .catch(error => console.error('Erro ao carregar o arquivo CSV:', error));
         }
-    });
 
-    return users;
-}
+        // Função para analisar o CSV e converter para um objeto de usuários
+        function parseCSV(csvData) {
+            const rows = csvData.split('\n');  // Divide as linhas do CSV
+            const users = {};  // Objeto onde os usuários serão armazenados
 
-// Função para validar o login
-function validateLogin(username, password) {
-    loadCSV("https://raw.githubusercontent.com/CatalogoEstoque/index/main/User.csv")
-        .then(users => {
-            if (users[username] === password) {
-                alert("Login bem-sucedido!");
-                // Redirecionar para a página de dados, por exemplo
-            } else {
-                alert("Usuário ou senha incorretos!");
-            }
-        });
-}
+            rows.forEach(row => {
+                const columns = row.split(';');  // Divide cada linha pelo ponto e vírgula
+                if (columns.length === 2) {
+                    const [username, password] = columns;  // Atribui o usuário e a senha
+                    users[username] = password;  // Adiciona no objeto
+                }
+            });
+
+            return users;
+        }
+
+        // Função para validar o login
+        function validateLogin(username, password) {
+            loadCSV("https://raw.githubusercontent.com/CatalogoEstoque/index/main/User.csv")
+                .then(users => {
+                    if (users[username] === password) {
+                        alert("Login bem-sucedido!");
+                        // Redirecionar para a página de dados, por exemplo
+                    } else {
+                        alert("Usuário ou senha incorretos!");
+                    }
+                });
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            validateLogin(username, password);
+        }
     </script>
 </body>
 </html>
-
-
