@@ -111,7 +111,7 @@
 
         if (users[username] && users[username] === password) {
             localStorage.setItem("loggedIn", "true");
-            alert("Login bem-sucedido!");
+            //alert("Login bem-sucedido!");
             window.location.href = "index.html";
         } else {
             document.getElementById("error").innerText = "Usuário ou senha incorretos!";
