@@ -103,20 +103,19 @@
 
             return users;
         }
-
-        // Função de validação de login
-        async function validateLogin(username, password) {
-            const users = await loadCSV("https://api.allorigins.win/raw?url=https://raw.githubusercontent.com/CatalogoEstoque/index/main/User.csv");
-            
-            console.log("Usuários carregados:", users); // Exibe usuários carregados para depuração
-
+      
         // Função chamada ao clicar no botão de login
         function login() {
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
             validateLogin(username, password);
-        }    
-                
+        }  
+        // Função de validação de login
+        async function validateLogin(username, password) {
+            const users = await loadCSV("https://api.allorigins.win/raw?url=https://raw.githubusercontent.com/CatalogoEstoque/index/main/User.csv");
+            
+            console.log("Usuários carregados:", users); // Exibe usuários carregados para depuração
+     
         if (users[username] && users[username] === password) {
               //alert("Login bem-sucedido!");
                 window.location.href = "index.html";  // Redireciona para a página index
@@ -125,7 +124,7 @@
             }
         }
 
-        
+       
 
 //function handleLogin() {
     // Supondo que a autenticação seja bem-sucedida
