@@ -113,7 +113,7 @@
                 
         if (users[username] && users[username] === password) {
               //alert("Login bem-sucedido!");
-                window.location.href = "https://catalogoestoque.github.io/index/";
+                window.location.href = "index.html";  // Redireciona para a página index
             } else {
                 document.getElementById("error").innerText = "Usuário ou senha incorretos!";
             }
@@ -126,16 +126,16 @@
             validateLogin(username, password);
         }
 
-function handleLogin() {
+//function handleLogin() {
     // Supondo que a autenticação seja bem-sucedida
-    localStorage.setItem("loggedIn", "true");
-    window.location.href = "index.html";  // Redireciona para a página index
-}
+//    localStorage.setItem("loggedIn", "true");
+//    window.location.href = "index.html";  // Redireciona para a página index
+//}
 
 // Antes de redirecionar para a index
-console.log("Login bem-sucedido, configurando localStorage...");
-localStorage.setItem("loggedIn", "true");
-window.location.href = "index.html";
+//console.log("Login bem-sucedido, configurando localStorage...");
+//localStorage.setItem("loggedIn", "true");
+//window.location.href = "index.html";
     </script>
 </body>
 </html>
