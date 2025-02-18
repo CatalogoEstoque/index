@@ -75,53 +75,55 @@
     <script>
         // Função para carregar o arquivo CSV via proxy (evita bloqueios de CORS)
         async function loadCSV(url) {
-        try {
-            const response = await fetch(url);
-            const data = await response.text();
-            return parseCSV(data);
-        } catch (error) {
-            console.error('Erro ao carregar o arquivo CSV:', error);
-            return {};
-        }
-    }
-
-    function parseCSV(csvData) {
-        const users = {};
-        const rows = csvData.split('\n');
-
-        console.log("CSV recebido:", csvData); // 🛠 Mostra o CSV no console
-
-        rows.slice(1).forEach(row => {  // Ignora a primeira linha (cabeçalho)
-            const columns = row.replace(/\r/g, '').split(';'); // Remove \r e divide por ";"
-            if (columns.length === 2) {
-                const username = columns[0].trim();
-                const password = columns[1].trim();
-                users[username] = password;
+            try {
+                const response = await fetch(url);
+                const data = await response.text();
+                return parseCSV(data);
+            } catch (error) {
+                console.error('Erro ao carregar o arquivo CSV:', error);
+                return {};
             }
-        });
-
-        console.log("Usuários carregados:", users); // 🛠 Mostra os usuários carregados
-        return users;
-    }
-
-    async function validateLogin(username, password) {
-        const users = await loadCSV("https://api.allorigins.win/raw?url=https://raw.githubusercontent.com/CatalogoEstoque/index/main/User.csv");
-
-        console.log("Tentando login com:", username, password); // 🛠 Mostra o login digitado
-
-        if (users[username] && users[username] === password) {
-            localStorage.setItem("loggedIn", "true");
-            window.location.href = "index.html";
-        } else {
-            document.getElementById("error").innerText = "Usuário ou senha incorretos!";
         }
-    }
 
-    function login() {
-        const username = document.getElementById('username').value.trim();
-        const password = document.getElementById('password').value.trim();
-        validateLogin(username, password);
-    }
+        // Função para converter o CSV em um objeto
+        function parseCSV(csvData) {
+            const users = {};
+            const rows = csvData.split('\n');
+
+            rows.forEach(row => {
+                const columns = row.replace(/\r/g, '').split(';'); // Remove caracteres extras
+                if (columns.length === 2) {
+                    const username = columns[0].trim();  // Remove espaços extras
+                    const password = columns[1].trim();  // Remove espaços extras
+                    if (username !== "username" && password !== "password") { // Ignora cabeçalhos
+                        users[username] = password;
+                    }
+                }
+            });
+
+            return users;
+        }
+
+        // Função de validação de login
+        async function validateLogin(username, password) {
+            const users = await loadCSV("https://api.allorigins.win/raw?url=https://raw.githubusercontent.com/CatalogoEstoque/index/main/User.csv");
+            
+            console.log("Usuários carregados:", users); // Exibe usuários carregados para depuração
+
+            if (users[username] && users[username] === password) {
+              //alert("Login bem-sucedido!");
+                window.location.href = "https://catalogoestoque.github.io/index/";
+            } else {
+                document.getElementById("error").innerText = "Usuário ou senha incorretos!";
+            }
+        }
+
+        // Função chamada ao clicar no botão de login
+        function login() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            validateLogin(username, password);
+        }
     </script>
 </body>
 </html>
