@@ -110,6 +110,16 @@
             
             console.log("Usuários carregados:", users); // Exibe usuários carregados para depuração
 
+            
+            
+            
+            // Antes de redirecionar para a index
+console.log("Login bem-sucedido, configurando localStorage...");
+localStorage.setItem("loggedIn", "true");
+window.location.href = "index.html";
+
+
+            
             if (users[username] && users[username] === password) {
               //alert("Login bem-sucedido!");
                 window.location.href = "https://catalogoestoque.github.io/index/";
