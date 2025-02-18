@@ -91,11 +91,11 @@
             const rows = csvData.split('\n');
 
             rows.forEach(row => {
-                const columns = row.replace(/\r/g, '').split(';'); // Remove caracteres extras
+                const columns = row.replace(/\r/g, '').split(/[,;]/); // Aceita separador ',' ou ';'
                 if (columns.length === 2) {
-                    const username = columns[0].trim();  // Remove espaços extras
-                    const password = columns[1].trim();  // Remove espaços extras
-                    if (username !== "username" && password !== "password") { // Ignora cabeçalhos
+                    const username = columns[0].trim();
+                    const password = columns[1].trim();
+                    if (username && password && username !== "username" && password !== "password") {
                         users[username] = password;
                     }
                 }
@@ -108,35 +108,33 @@
         function login() {
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
+
+            // Evita login sem usuário e senha
+            if (!username || !password) {
+                document.getElementById("error").innerText = "Preencha usuário e senha!";
+                return;
+            }
+
             validateLogin(username, password);
         }  
+
         // Função de validação de login
         async function validateLogin(username, password) {
             const users = await loadCSV("https://api.allorigins.win/raw?url=https://raw.githubusercontent.com/CatalogoEstoque/index/main/User.csv");
             
-            console.log("Usuários carregados:", users); // Exibe usuários carregados para depuração
-     
-        if (users[username] && users[username] === password) {
-              //alert("Login bem-sucedido!");
-               localStorage.setItem("loggedIn", "true");
+            console.log("Usuários carregados:", users); // Depuração no console
+            console.log("Usuário digitado:", username, "Senha digitada:", password);
+
+            if (users[username] && users[username] === password) {
+                console.log("Login validado com sucesso!");
+                localStorage.setItem("loggedIn", "true");
                 window.location.href = "index.html";  // Redireciona para a página index
             } else {
+                console.log("Login falhou! Usuário ou senha incorretos.");
                 document.getElementById("error").innerText = "Usuário ou senha incorretos!";
             }
         }
 
-       
-
-//function handleLogin() {
-//    // Supondo que a autenticação seja bem-sucedida
-//    localStorage.setItem("loggedIn", "true");
-//    window.location.href = "index.html";  // Redireciona para a página index
-//}
-
-// Antes de redirecionar para a index
-//console.log("Login bem-sucedido, configurando localStorage...");
-//localStorage.setItem("loggedIn", "true");
-//window.location.href = "index.html";
     </script>
 </body>
 </html>
