@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Produtos</title>
+    <link rel="stylesheet" href="stylesindex.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h3 style="text-align: center;">Catálogo de Produtos</h3>
+        <p id="active-filter">Filtro ativo: Nenhum</p>
+        <p id="total-count"></p>
+        <p id="filtered-count">Total de itens: 0</p> 
+        <div class="categories" id="categoryButtons">
+            <button class="category" onclick="clearCategory()">Limpar Filtros</button>
+            <button class="category" onclick="filterCategory('Escritório')">Escritório</button>
+            <button class="category" onclick="filterCategory('EPI')">EPI</button>
+            <button class="category" onclick="filterCategory('Insumos')">Insumos</button>
+            <button class="category" onclick="filterCategory('Elétrico')">Elétrico</button>
+            <button class="category" onclick="filterCategory('Eletrônico')">Eletrônico</button>
+            <button class="category" onclick="filterCategory('Tintas')">Tintas</button>
+            <button class="category" onclick="filterCategory('Manutenção')">Manutenção</button>
+            <button class="category" onclick="filterCategory('Limpeza')">Limpeza</button>
+            
+        </div>
+
+        <h3 style="text-align: center;">Formato</h3>
+        
+        <div class="categories" id="formatCategoryButtons">
+            <button class="category" onclick="filterFormat('28xx1.19')">28x1.19</button>
+            <button class="category" onclick="filterFormat('60x1.20')">60x1.20</button>
+            <button class="category" onclick="filterFormat('80x80')">80x80</button>
+            <button class="category" onclick="filterFormat('1.00x1.00')">1.00x1.00</button>
+            <button class="category" onclick="filterFormat('1.20x1.20')">1.20x1.20</button>
+            <button class="category" onclick="filterFormat('80x1.60')">80x1.60</button>
+            <button class="category" onclick="filterFormat('26x1.60')">26x1.60</button>
+            <button class="category" onclick="filterFormat('90x90')">90x90</button>
+            <button class="category" onclick="filterFormat('45x65')">45x65</button>
+            <!-- Adicione mais formatos conforme necessário -->
+        </div> 
+    </div>
+
+    <div class="filters-container">
+        <input type="text" id="filterCode" placeholder="Filtrar por Código" oninput="applyFilters()">
+        <input type="text" id="filterDescription" placeholder="Filtrar por Descrição" oninput="applyFilters()">
+        <input type="text" id="filterLocation" placeholder="Filtrar por Localização" oninput="applyFilters()">
+    </div>
+    
+    <div class="container" id="product-list"></div>
+ 
+
+ <script src="scriptindex.js"></script>
+</body>
+</html>

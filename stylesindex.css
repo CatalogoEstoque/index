@@ -1,0 +1,143 @@
+body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            font-size: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #444;
+        }
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 50px;
+            background: #fff;
+            padding: 10px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            height: calc(100vh - 100px);
+            width: 70px;   
+            height: 780px;
+        }
+
+        .categories {
+            display: flex;
+            flex-direction: column;
+        }
+        .category {
+            padding: 5px;
+            margin: 2px 0;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1em;
+            text-align: center;
+        }
+
+        .category:hover {
+            background-color: #0056b3;
+        }
+        .filters-container {
+            position: fixed;
+            top: 0;
+            left: 0px;
+            right: 0;
+            background: black;
+            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: left;
+            gap: 2px;
+            padding: 10px 5px; /* Aumenta a área de clique */
+            font-size: 20px; /* Aumenta o tamanho do texto */
+            height: 30px; /* Define uma altura fixa */
+            min-width: 50px; /* Define uma largura mínima */
+
+        }
+        .filters input {
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: left; /* Centraliza os itens dentro do quadro */
+    justify-content: left;
+    margin-left: 100px; /* Ajuste para sidebar */
+    margin-top: 80px;
+    padding: 20px; /* Melhor espaçamento interno */
+    width: 80%;
+    background: #f4f4f4; /* Cor de fundo para destacar o quadro */
+    border-radius: 10px; /* Bordas arredondadas */
+}
+
+@media (max-width: 768px) {
+        .sidebar {
+           width: 100px; /* Sidebar menor em telas pequenas */
+        }
+       .container {
+           width: 100%; /* Ajustes adicionais para telas menores */
+  }
+	.header {
+        height: auto;  /* Outros ajustes necessários */
+  }
+
+}
+        .product {
+    width: 90%; /* Mantém a largura responsiva */
+    max-width: 390px; /* Define um limite para não ficar muito largo */
+    height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 15px;
+    background: linear-gradient(135deg, #1e1e1e, #3a3a3a); /* Gradiente escuro futurista */
+    border-radius: 10px; /* Bordas mais suaves */
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.6), 0 0 20px rgba(0, 255, 255, 0.3) inset; /* Efeito de brilho */
+    border: 2px solid rgba(0, 255, 255, 0.8); /* Bordas neon */
+    color: #fff; /* Texto branco para contraste */
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+   }
+
+.product:hover {
+            transform: translateY(-5px);
+            
+        }
+
+        .product img {
+           width: 80px; /* Redimensiona a imagem */
+           height: 55px;
+           object-fit: cover;
+           border-radius: 5px;
+        }
+
+        .product img.zoom {
+           transform: scale(6.0); /* Zoom */
+           transform-origin: left; /* Faz o zoom a partir da esquerda */
+           transition: transform 0.3s ease;
+         }
+
+.img {
+  max-width: 100%;
+  height: auto;
+}
+
+.product-details p {
+    display: block;
+    margin: 5px 0;
+}
+
+.product p {
+    display: block;
+    margin: 5px 0;
+}
