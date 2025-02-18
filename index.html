@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo de Produtos</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
          body {
             font-family: 'Poppins', sans-serif;
@@ -131,18 +131,14 @@
 
         .product img.zoom {
            transform: scale(5.0); /* Zoom */
-           transform-origin: left center;
            transition: transform 0.3s ease;
          }
 
-        .img {
-           max-width: 100%;
-           height: auto;
-         }
-        .product-details p {
-           display: block;
-           margin: 5px 0;
-         }
+.img {
+  max-width: 100%;
+  height: auto;
+}
+
     </style>
 </head>
 <body>
@@ -190,47 +186,43 @@
     <div class="container" id="product-list"></div>
 
     <script>
-document.addEventListener("DOMContentLoaded", function () {
-    // Verificar login assim que a página estiver carregada
-    if (!localStorage.getItem("loggedIn")) {
-        window.location.href = "login.html"; // Redireciona se não estiver logado
-    }
-
     let allProducts = [];
     let selectedCategory = "";
     let selectedFormat = "";
 
-    // URL do arquivo no GitHub
     document.addEventListener("DOMContentLoaded", function () {
-    const fileUrl = "https://raw.githubusercontent.com/CatalogoEstoque/index/main/json.xlsx";
+        // URL do arquivo no GitHub
+        const fileUrl = "https://raw.githubusercontent.com/CatalogoEstoque/index/main/json.xlsx";
 
-    fetch(fileUrl)
-        .then(response => response.arrayBuffer())
-        .then(data => {
-            const workbook = XLSX.read(new Uint8Array(data), { type: "array" });
+        fetch(fileUrl)
+            .then(response => response.arrayBuffer())
+            .then(data => {
+                const workbook = XLSX.read(new Uint8Array(data), { type: "array" });
 
-            // Pegando a primeira aba do arquivo
-            const sheetName = workbook.SheetNames[0];
-            const sheet = workbook.Sheets[sheetName];
+                // Pegando a primeira aba do arquivo
+                const sheetName = workbook.SheetNames[0];
+                const sheet = workbook.Sheets[sheetName];
 
-            // Convertendo os dados para JSON
-            allProducts = XLSX.utils.sheet_to_json(sheet);
+                // Convertendo os dados para JSON
+                allProducts = XLSX.utils.sheet_to_json(sheet);
 
-            // Exibir os produtos assim que o arquivo for carregado
-            renderProducts(allProducts);
-        })
-        .catch(error => console.error("Erro ao carregar o arquivo:", error));
-});
+                // Exibir os produtos assim que o arquivo for carregado
+                renderProducts(allProducts);
+            })
+            .catch(error => console.error("Erro ao carregar o arquivo:", error));
+    });
+
     function filterCategory(category) {
         selectedCategory = category;
+     selectedFormat = "";
         document.getElementById("active-filter").innerText = `Filtro ativo: ${category}`;
         applyFilters();
     }
 
-
     function filterFormat(format) {
         selectedFormat = format;
-        document.getElementById("active-filter").innerText = `Filtro ativo: ${selectedCategory} ${selectedFormat ? ' | Formato: ' + selectedFormat : ''}`;
+        selectedCategory = "";
+        document.getElementById("active-filter").innerText = `Filtro ativo: ${selectedCategory} ${selectedFormat ? '  Formato: ' + selectedFormat : ''}`;
         applyFilters();
     }
 
@@ -239,8 +231,9 @@ document.addEventListener("DOMContentLoaded", function () {
         selectedFormat = "";
         applyFilters();
         document.getElementById("active-filter").textContent = "Filtro ativo: Nenhum";
+        
     }
-    
+
     function applyFilters() {
         const codeFilter = document.getElementById("filterCode").value.toLowerCase();
         const descriptionFilter = document.getElementById("filterDescription").value.toLowerCase();
@@ -264,7 +257,7 @@ document.addEventListener("DOMContentLoaded", function () {
             filteredProducts = filteredProducts.filter(product => String(product["Pos.dpst."]).toLowerCase().includes(locationFilter));
         }
 
-       document.getElementById("filtered-count").innerText =  `Total Filtro: ${filteredProducts.length}`;
+        document.getElementById("filtered-count").innerText = `Total Filtro: ${filteredProducts.length}`;
 
         renderProducts(filteredProducts);
     }
@@ -278,25 +271,23 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-         products.forEach(product => {
-    const div = document.createElement("div");
-    div.classList.add("product");
-    div.innerHTML = `
-        <img src="${product.Imagem ?? 'placeholder.jpg'}" onclick="zoomImage(this)">
-        <h2>${product.Material ?? 'Material não especificado'}</h2>
-        <div class="product-details">
-            <p>${product.TxtBreveMaterial ?? 'Descrição não disponível'}</p>
-            <p><strong>Unidade:</strong> ${product.UMB ?? 'N/A'}</p>
-            <p><strong>Posição:</strong> ${product['Pos.dpst.'] ?? 'Localização não informada'}</p>
-        </div>
-    `;
-productList.appendChild(div);
-   });
-}
-function zoomImage(img) {
+        products.forEach(product => {
+            const div = document.createElement("div");
+            div.classList.add("product");
+            div.innerHTML = `
+                <img src="${product.Imagem ?? 'placeholder.jpg'}" onclick="zoomImage(this)">
+                <h2>${product.Material ?? 'Material não especificado'}</h2>
+                <p>${product.TxtBreveMaterial ?? 'Descrição não disponível'}</p>
+                <p>${product['Pos.dpst.'] ?? 'Localização não informada'}</p>
+            `;
+            productList.appendChild(div);
+        });
+    }
+
+    function zoomImage(img) {
         img.classList.toggle("zoom");
     }
-    
-</script>
+    </script>
+
 </body>
 </html>
