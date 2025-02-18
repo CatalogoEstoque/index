@@ -206,7 +206,11 @@
     let selectedFormat = "";
 
     document.addEventListener("DOMContentLoaded", function () {
-        // URL do arquivo no GitHub
+
+if (!localStorage.getItem("loggedIn")) {
+        window.location.href = "login.html"; // Redireciona se não estiver logado
+    }     
+       // URL do arquivo no GitHub
         const fileUrl = "https://raw.githubusercontent.com/CatalogoEstoque/index/main/json.xlsx";
 
         fetch(fileUrl)
