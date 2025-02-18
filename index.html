@@ -209,15 +209,15 @@
     document.addEventListener("DOMContentLoaded", function () {
 
 // Verifique se o item 'loggedIn' está presente
-console.log("Verificando login...", localStorage.getItem("loggedIn"));
-if (!localStorage.getItem("loggedIn")) {
+console.log("Verificando login...", sessionStorage.getItem("loggedIn"));
+if (!sessionStorage.getItem("loggedIn")) {
     console.log("Usuário não logado, redirecionando...");
     window.location.href = "login.html"; // Redireciona se não estiver logado
 } else {
     console.log("Usuário logado, mantendo na index.");
 }
 	    
-if (!localStorage.getItem("loggedIn")) {
+if (!sessionStorage.getItem("loggedIn")) {
         window.location.href = "login.html"; // Redireciona se não estiver logado
     }     
        // URL do arquivo no GitHub
