@@ -110,6 +110,12 @@
             
             console.log("Usuários carregados:", users); // Exibe usuários carregados para depuração
 
+        // Função chamada ao clicar no botão de login
+        function login() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            validateLogin(username, password);
+        }    
                 
         if (users[username] && users[username] === password) {
               //alert("Login bem-sucedido!");
@@ -119,12 +125,7 @@
             }
         }
 
-        // Função chamada ao clicar no botão de login
-        function login() {
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
-            validateLogin(username, password);
-        }
+        
 
 //function handleLogin() {
     // Supondo que a autenticação seja bem-sucedida
