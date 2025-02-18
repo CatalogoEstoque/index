@@ -100,7 +100,7 @@
 }
         .product {
     width: 90%; /* Mantém a largura responsiva */
-    max-width: 600px; /* Define um limite para não ficar muito largo */
+    max-width: 390px; /* Define um limite para não ficar muito largo */
     height: 50px;
     display: flex;
     align-items: center;
@@ -124,13 +124,13 @@
 
         .product img {
            width: 80px; /* Redimensiona a imagem */
-           height: 50px;
+           height: 55px;
            object-fit: cover;
            border-radius: 5px;
         }
 
         .product img.zoom {
-           transform: scale(5.0); /* Zoom */
+           transform: scale(6.0); /* Zoom */
            transform-origin: left; /* Faz o zoom a partir da esquerda */
            transition: transform 0.3s ease;
          }
@@ -139,6 +139,20 @@
   max-width: 100%;
   height: auto;
 }
+
+.product-details p {
+    display: block;
+    margin: 5px 0;
+}
+
+.product p {
+    display: block;
+    margin: 5px 0;
+}
+
+
+
+
 
     </style>
 </head>
@@ -273,16 +287,22 @@
         }
 
         products.forEach(product => {
-            const div = document.createElement("div");
-            div.classList.add("product");
-            div.innerHTML = `
-                <img src="${product.Imagem ?? 'placeholder.jpg'}" onclick="zoomImage(this)">
-                <h2>${product.Material ?? 'Material não especificado'}</h2>
-                <p>${product.TxtBreveMaterial ?? 'Descrição não disponível'}</p>
-                <p>${product['Pos.dpst.'] ?? 'Localização não informada'}</p>
+    const div = document.createElement("div");
+    div.classList.add("product");
+    div.innerHTML = `
+        <img src="${product.Imagem ?? 'placeholder.jpg'}" onclick="zoomImage(this)">
+        <h2>${product.Material ?? 'Material não especificado'}</h2>
+        <div class="product-details">
+            <p>${product.TxtBreveMaterial ?? 'Descrição não disponível'}</p>
+            <p><strong>Unidade:</strong> ${product.UMB ?? 'N/A'}</p>
+            <p><strong>Posição:</strong> ${product['Pos.dpst.'] ?? 'Localização não informada'}</p>
+        </div>
             `;
             productList.appendChild(div);
         });
+
+        console.log("Total de itens na lista:", allProducts.length);
+        document.getElementById("total-count").innerText = `Total de itens: ${allProducts.length}`;
     }
 
     function zoomImage(img) {
