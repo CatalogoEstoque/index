@@ -74,10 +74,10 @@
 
     <script>
 
-//        // Remover login salvo ao carregar a página
-//        window.onload = function () {
-//            sessionStorage.removeItem("loggedIn"); // Garante que a sessão seja apagada
-//        };
+     // Remover login salvo ao carregar a página
+        window.onload = function () {
+            localStorage.removeItem("loggedIn"); // Garante que a sessão seja apagada
+        };
         
         // Função para carregar o arquivo CSV via proxy (evita bloqueios de CORS)
         async function loadCSV(url) {
@@ -133,7 +133,7 @@
 
             if (users[username] && users[username] === password) {
                 console.log("Login validado com sucesso!");
-                sessionStorage.setItem("loggedIn", "true");
+                localStorage.setItem("loggedIn", "true");
                 window.location.href = "index.html";  // Redireciona para a página index
             } else {
                 console.log("Login falhou! Usuário ou senha incorretos.");
