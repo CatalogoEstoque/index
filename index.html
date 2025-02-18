@@ -201,6 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let selectedFormat = "";
 
     // URL do arquivo no GitHub
+    document.addEventListener("DOMContentLoaded", function () {
     const fileUrl = "https://raw.githubusercontent.com/CatalogoEstoque/index/main/json.xlsx";
 
     fetch(fileUrl)
@@ -219,7 +220,7 @@ document.addEventListener("DOMContentLoaded", function () {
             renderProducts(allProducts);
         })
         .catch(error => console.error("Erro ao carregar o arquivo:", error));
-
+});
     function filterCategory(category) {
         selectedCategory = category;
         document.getElementById("active-filter").innerText = `Filtro ativo: ${category}`;
@@ -290,15 +291,12 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
     `;
 productList.appendChild(div);
-});
-    }
-
-    function zoomImage(img) {
+   });
+}
+function zoomImage(img) {
         img.classList.toggle("zoom");
     }
+    
 </script>
-
-
-
 </body>
 </html>
