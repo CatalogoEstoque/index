@@ -73,6 +73,12 @@
     </div>
 
     <script>
+
+        // Remover login salvo ao carregar a página
+        window.onload = function () {
+            sessionStorage.removeItem("loggedIn"); // Garante que a sessão seja apagada
+        };
+        
         // Função para carregar o arquivo CSV via proxy (evita bloqueios de CORS)
         async function loadCSV(url) {
             try {
@@ -127,7 +133,7 @@
 
             if (users[username] && users[username] === password) {
                 console.log("Login validado com sucesso!");
-                localStorage.setItem("loggedIn", "true");
+                sessionStorage.setItem("loggedIn", "true");
                 window.location.href = "index.html";  // Redireciona para a página index
             } else {
                 console.log("Login falhou! Usuário ou senha incorretos.");
