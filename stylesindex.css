@@ -122,7 +122,7 @@ body {
         }
 
         .product img.zoom {
-           transform: scale(6.0); /* Zoom */
+           transform: scale(5.0); /* Zoom */
            transform-origin: left; /* Faz o zoom a partir da esquerda */
            transition: transform 0.3s ease;
          }
