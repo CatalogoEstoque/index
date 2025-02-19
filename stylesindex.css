@@ -20,6 +20,7 @@ body {
             height: calc(100vh - 100px);
             width: 70px;   
             height: 780px;
+            overflow-y: scroll;
         }
 
         .categories {
