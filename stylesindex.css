@@ -13,7 +13,7 @@ body {
         .sidebar {
             position: fixed;
             left: 0;
-            top: 50px;
+            top: 60px;
             background: #939b94;
             padding: 10px;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -46,7 +46,7 @@ body {
             top: 0;
             left: 0px;
             right: 0;
-            background: black;
+            background: #939b94;
             box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: left;
