@@ -70,7 +70,7 @@ body {
     flex-direction: column;
     align-items: left; /* Centraliza os itens dentro do quadro */
     justify-content: left;
-    margin-left: 90px; /* Ajuste para sidebar */
+    margin-left: 100px; /* Ajuste para sidebar */
     margin-top: 80px;
     padding: 10px; /* Melhor espaçamento interno */
     width: 80%;
@@ -78,10 +78,10 @@ body {
     border-radius: 10px; /* Bordas arredondadas */
 }
 
-@media (max-width: 768px) {
-        .sidebar {
-           width: 100px; /* Sidebar menor em telas pequenas */
-        }
+@media screen and (max-width: 1024px) {
+    .container {
+        width: 95%;
+    }
        .container {
            width: 100%; /* Ajustes adicionais para telas menores */
   }
