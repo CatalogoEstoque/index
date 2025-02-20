@@ -101,18 +101,14 @@ body {
                     }
          }
 @media screen and (max-width: 1024px) {
-         .container {
-            width: 70%;
-         }
-   //.container {
-   //      width: 70%; /* Ajustes adicionais para telas menores */
-   //   }
-	.header {
-        height: auto;  /* Outros ajustes necessários */
-  }
-.category:hover {
-            background-color: #10ff00;;
-        }
+                  .container {
+                              width: 80%;
+                              padding: 1px;
+                  }
+                  .category:hover {
+                              background-color: #10ff00;;
+                  }
+	          
 }
         .product {
     width: 90%; /* Mantém a largura responsiva */
