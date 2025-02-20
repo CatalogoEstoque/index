@@ -110,7 +110,9 @@ body {
 	.header {
         height: auto;  /* Outros ajustes necessários */
   }
-
+.category:hover {
+            background-color: #10ff00;;
+        }
 }
         .product {
     width: 90%; /* Mantém a largura responsiva */
