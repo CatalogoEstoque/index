@@ -102,10 +102,10 @@ body {
          }
 @media screen and (max-width: 1024px) {
          .container {
-            width: 95%;
+            width: 70%;
          }
    //.container {
-   //      width: 100%; /* Ajustes adicionais para telas menores */
+   //      width: 70%; /* Ajustes adicionais para telas menores */
    //   }
 	.header {
         height: auto;  /* Outros ajustes necessários */
