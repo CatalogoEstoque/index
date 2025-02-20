@@ -23,7 +23,7 @@ body {
             overflow-y: scroll;
         }
 
-        .category .selected {
+        .category.selected {
             background-color: #003366; /* Azul escuro */
             color: white; /* Para garantir contraste */
             font-weight: bold;
