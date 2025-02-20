@@ -23,6 +23,12 @@ body {
             overflow-y: scroll;
         }
 
+        .category .selected {
+            background-color: #003366; /* Azul escuro */
+            color: white; /* Para garantir contraste */
+            font-weight: bold;
+        }
+
         .categories {
             display: flex;
             flex-direction: column;
@@ -53,9 +59,9 @@ body {
             justify-content: left;
             gap: 2px;
             padding: 10px 5px; /* Aumenta a área de clique */
-            font-size: 20px; /* Aumenta o tamanho do texto */
+          /*  font-size: 20px;*/ /* Aumenta o tamanho do texto */
             height: 30px; /* Define uma altura fixa */
-            min-width: 50px; /* Define uma largura mínima */
+          /*  min-width: 50px;*/ /* Define uma largura mínima */
 
         }
         .filters input {
@@ -66,26 +72,41 @@ body {
         }
 
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: left; /* Centraliza os itens dentro do quadro */
-    justify-content: left;
-    margin-left: 100px; /* Ajuste para sidebar */
-    margin-top: 80px;
-    padding: 10px; /* Melhor espaçamento interno */
-    width: 80%;
-    //background: #f4f4f4; /* Cor de fundo para destacar o quadro */
-    border-radius: 10px; /* Bordas arredondadas */
+        .container {
+            display: flex;
+            flex-direction: row;
+            align-items: left; /* Centraliza os itens dentro do quadro */
+            justify-content: left;
+            margin-left: 100px; /* Ajuste para sidebar */
+            margin-top: 15px;
+            padding: 10px; /* Melhor espaçamento interno */
+            width: 80%;
+          //background: #f4f4f4; /* Cor de fundo para destacar o quadro */
+            border-radius: 10px; /* Bordas arredondadas */
+            flex-wrap: wrap; /* Permite quebra de linha quando necessário */
+         // gap: 2px; /* Espaçamento entre os itens */
+         }
+
+        .item {
+  flex: 1 1 calc(33.33% - 10px); /* Máximo 3 colunas */
+  min-width: 200px; /* Define um tamanho mínimo para reorganizar */
 }
 
+
+
+ @media (min-width: 768px) { /* Para telas maiores, como PC */
+        .container {
+            flex-direction: row; /* Altera para linha (colunas lado a lado) */
+            justify-content: space-between; /* Ajusta espaçamento entre as colunas */
+                    }
+         }
 @media screen and (max-width: 1024px) {
-    .container {
-        width: 95%;
-    }
-       .container {
-           width: 100%; /* Ajustes adicionais para telas menores */
-  }
+         .container {
+            width: 95%;
+         }
+   //.container {
+   //      width: 100%; /* Ajustes adicionais para telas menores */
+   //   }
 	.header {
         height: auto;  /* Outros ajustes necessários */
   }
