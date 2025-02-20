@@ -102,7 +102,7 @@ body {
          }
 @media screen and (max-width: 1024px) {
                   .container {
-                              width: 80%;
+                              width: 90%; /* Ajustes adicionais para telas menores */
                               padding: 1px;
                   }
                   .category:hover {
