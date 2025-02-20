@@ -116,7 +116,7 @@ body {
 }
         .product {
     width: 90%; /* Mantém a largura responsiva */
-    max-width: 390px; /* Define um limite para não ficar muito largo */
+    max-width: 370px; /* Define um limite para não ficar muito largo */
     height: 50px;
     display: flex;
     align-items: center;
