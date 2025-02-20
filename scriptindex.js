@@ -127,16 +127,6 @@ if (!localStorage.getItem("loggedIn")) {
     applyFilters();
 }
 
-
-    function clearCategory() {
-        selectedSector = "";
-        selectedCategory = "";
-        selectedFormat = "";
-        applyFilters();
-        document.getElementById("active-filter").textContent = "Filtro ativo: Nenhum";
-        
-    }
-
    function applyFilters() {
     const codeFilter = document.getElementById("filterCode").value.toLowerCase();
     const descriptionFilter = document.getElementById("filterDescription").value.toLowerCase();
