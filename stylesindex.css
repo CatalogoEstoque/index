@@ -24,7 +24,7 @@ body {
         }
 
         .category.selected {
-            background-color: #10ff00; /* Azul escuro */
+            background-color: #10ff00; /* Verde escuro */
             color: white; /* Para garantir contraste */
             font-weight: bold;
         }
@@ -46,7 +46,7 @@ body {
         }
 
         .category:hover {
-            background-color: #939b94;
+            background-color: #10ff00;
         }
         .filters-container {
             position: fixed;
