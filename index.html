@@ -11,11 +11,13 @@
 
     <div class="sidebar">
         
-        <p id="active-filter">Filtro ativo: Nenhum</p>
+        <!--<p id="active-filter">Filtro ativo: Nenhum</p>-->
         <p id="total-count"></p>
-        <p id="filtered-count">Total de itens: 0</p> 
+        <p id="filtered-count">Total itens: 0</p> 
 
-        <button class="category" onclick="clearCategory()">Limpar Filtros</button>
+        <div class="categories" id="categoryButtons">
+            <button class="category" onclick="clearCategory()">Limpar Filtros</button>
+        </div>
 
         <h3 style="text-align: center;">Categoria</h3>
         <div class="categories" id="categoryButtons">
@@ -28,8 +30,7 @@
             <button class="category" onclick="filterCategory('Tintas')">Tintas</button>
             <button class="category" onclick="filterCategory('Manutenção')">Manutenção</button>
             <button class="category" onclick="filterCategory('Limpeza')">Limpeza</button>
-            
-        </div>
+          </div>
 
         <h3 style="text-align: center;">Setor</h3>  
         <div class="categories" id="formatCategoryButtons">
