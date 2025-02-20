@@ -46,7 +46,7 @@ body {
         }
 
         .category:hover {
-            background-color: #10ff00;
+            background-color: #007bff;
         }
         .filters-container {
             position: fixed;
