@@ -141,7 +141,7 @@ body {
 
         .product img {
            width: 80px; /* Redimensiona a imagem */
-           height: 55px;
+           /*height: 55px;*/ 
            object-fit: cover;
            border-radius: 5px;
         }
