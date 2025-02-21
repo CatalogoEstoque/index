@@ -18,7 +18,7 @@ body {
             padding: 10px;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
             height: calc(100vh - 100px);
-            width: 75px;   
+            width: 90px;   
             /*height: 700px;*/
             overflow-y: scroll;
         }
@@ -101,29 +101,26 @@ body {
                     }
          }
 @media screen and (max-width: 1024px) {
-                  .container {
-                              width: 90%; /* Ajustes adicionais para telas menores */
-                              padding: 1px;
-                  }
-	          .product {
-	                      gap: 2px;
-                              padding: 3px 3px;
-                              font-size: 9px;
-		  }
-                  .category:hover {
-                              background-color: #10ff00;;
-                  }
-	          
+         .container {
+            width: 95%;
+         }
+   //.container {
+   //      width: 100%; /* Ajustes adicionais para telas menores */
+   //   }
+	.header {
+        height: auto;  /* Outros ajustes necessários */
+  }
+
 }
         .product {
     width: 90%; /* Mantém a largura responsiva */
-    max-width: 370px; /* Define um limite para não ficar muito largo */
+    max-width: 390px; /* Define um limite para não ficar muito largo */
     height: 50px;
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 5px 15px;
-    background: linear-gradient(135deg, #312d2d, #1197db); /* Gradiente escuro futurista */
+    background: linear-gradient(135deg, #1e1e1e, #3a3a3a); /* Gradiente escuro futurista */
     border-radius: 10px; /* Bordas mais suaves */
     box-shadow: 0 0 10px rgba(0, 255, 255, 0.6), 0 0 20px rgba(0, 255, 255, 0.3) inset; /* Efeito de brilho */
     border: 2px solid rgba(0, 255, 255, 0.8); /* Bordas neon */
@@ -140,8 +137,8 @@ body {
         }
 
         .product img {
-           width: 80px; /* Redimensiona a imagem */
-           /*height: 55px;*/ 
+           width: 60px; /* Redimensiona a imagem */
+           height: 55px;
            object-fit: cover;
            border-radius: 5px;
         }
