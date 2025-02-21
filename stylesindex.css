@@ -149,8 +149,13 @@ body {
         .product img.zoom {
            transform: scale(5.0); /* Zoom */
            transform-origin: left; /* Faz o zoom a partir da esquerda */
+           width: auto;
+           height: auto;
+           max-width: 100px; /* Define um tamanho máximo */
+           max-height: 100px;
            transition: transform 0.3s ease;
-         }
+           object-fit: contain; /* Mantém o aspecto original da imagem */
+       }
 
 .img {
   max-width: 100%;
