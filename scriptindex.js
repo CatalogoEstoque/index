@@ -1,6 +1,7 @@
 let allProducts = [];
     let selectedCategory = "";
     let selectedFormat = "";
+    let selectedSector = "";
 
     document.addEventListener("DOMContentLoaded", function () {
 
