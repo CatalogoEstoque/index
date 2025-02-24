@@ -158,6 +158,10 @@ if (!localStorage.getItem("loggedIn")) {
         filteredProducts = filteredProducts.filter(product => String(product.Equipamento).toLowerCase().includes(equipamentoFilter));
     }
 
+    // Ordena os produtos em ordem alfabética pelo campo TxtBreveMaterial
+    filteredProducts.sort((a, b) => a.TxtBreveMaterial.localeCompare(b.TxtBreveMaterial, undefined, { sensitivity: 'base' }));
+
+	   
     document.getElementById("filtered-count").innerText = `Total Filtro: ${filteredProducts.length}`;
 
     renderProducts(filteredProducts);
