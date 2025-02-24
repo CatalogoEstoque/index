@@ -110,7 +110,7 @@ if (!localStorage.getItem("loggedIn")) {
         selectedSector = "";
         selectedCategory = "";
         selectedFormat = format;
-        document.getElementById("active-filter").innerText = `Filtro ativo: ${selectedCategory} ${selectedFormat ? '  Formato: ' + selectedFormat : ''}`;
+        document.getElementById("active-filter").innerText = `${selectedCategory} ${selectedFormat ? '  Formato: ' + selectedFormat : ''}`;
     }
 
     // Remove a classe 'selected' de todos os botões de formato
