@@ -152,6 +152,8 @@ h1 {
            max-height: 100px;
            transition: transform 0.3s ease;
            object-fit: contain; /* Mantém o aspecto original da imagem */
+           transform-origin: left top; /* Faz o zoom a partir da esquerda e de cima */
+           top: 100%; /* Move a imagem para baixo */
        }
 
 .img {
