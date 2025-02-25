@@ -5,12 +5,13 @@ body {
             background-color: #939b94;
             color: #333;
             font-size: 10px;
+            
         }
-        h1 {
+h1 {
             text-align: center;
             color: #444;
         }
-        .sidebar {
+.sidebar {
             position: fixed;
             left: 0;
             top: 60px;
@@ -23,17 +24,17 @@ body {
             overflow-y: scroll;
         }
 
-        .category.selected {
+.category.selected {
             background-color: #10ff00; /* Verde escuro */
             color: white; /* Para garantir contraste */
             font-weight: bold;
         }
 
-        .categories {
+.categories {
             display: flex;
             flex-direction: column;
         }
-        .category {
+.category {
             padding: 5px;
             margin: 2px 0;
             background-color: #007bff;
@@ -45,10 +46,10 @@ body {
             text-align: center;
         }
 
-        .category:hover {
+.category:hover {
             background-color: #007bff;
         }
-        .filters-container {
+.filters-container {
             position: fixed;
             top: 0;
             left: 0px;
@@ -62,9 +63,9 @@ body {
           /*  font-size: 20px;*/ /* Aumenta o tamanho do texto */
             height: 30px; /* Define uma altura fixa */
           /*  min-width: 50px;*/ /* Define uma largura mínima */
-
+           background: linear-gradient(135deg, #1e1e1e, #3663a9); /* Gradiente escuro futurista */
         }
-        .filters input {
+.filters input {
             padding: 10px;
             width: 200px;
             border: 1px solid #ccc;
@@ -72,23 +73,23 @@ body {
         }
 
 
-        .container {
+.container {
             display: flex;
             flex-direction: row;
             align-items: left; /* Centraliza os itens dentro do quadro */
             justify-content: left;
-            margin-left: 100px; /* Ajuste para sidebar */
+            margin-left: 120px; /* Ajuste para sidebar */
             margin-top: 15px;
             padding: 10px; /* Melhor espaçamento interno */
-            width: 80%;
-          //background: #f4f4f4; /* Cor de fundo para destacar o quadro */
+            width: 90%;
+            background: #f4f4f4; /* Cor de fundo para destacar o quadro */
             border-radius: 10px; /* Bordas arredondadas */
             flex-wrap: wrap; /* Permite quebra de linha quando necessário */
-         // gap: 2px; /* Espaçamento entre os itens */
+            gap: 2px; /* Espaçamento entre os itens */
          }
 
         .item {
-  flex: 1 1 calc(33.33% - 10px); /* Máximo 3 colunas */
+  flex: 1 1 calc(25% - 1px*); /* Máximo 3 colunas */
   min-width: 200px; /* Define um tamanho mínimo para reorganizar */
 }
 
@@ -97,22 +98,21 @@ body {
  @media (min-width: 768px) { /* Para telas maiores, como PC */
         .container {
             flex-direction: row; /* Altera para linha (colunas lado a lado) */
-            justify-content: space-between; /* Ajusta espaçamento entre as colunas */
+           /* justify-content: space-between; */ /* Ajusta espaçamento entre as colunas */
                     }
          }
-@media screen and (max-width: 1024px) {
-         .container {
+@media screen and (max-width: 1024px) { /* Ajustes adicionais para telas menores */
+   .container {
             width: 95%;
-         }
-   //.container {
-   //      width: 100%; /* Ajustes adicionais para telas menores */
-   //   }
-	.header {
+            margin-left: 120px; /* Ajuste para sidebar */
+              }
+ 
+   .header {
         height: auto;  /* Outros ajustes necessários */
+           }
   }
 
-}
-        .product {
+.product {
     width: 90%; /* Mantém a largura responsiva */
     max-width: 390px; /* Define um limite para não ficar muito largo */
     height: 50px;
