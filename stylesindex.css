@@ -122,8 +122,8 @@ h1 {
     padding: 5px 15px;
     background: linear-gradient(135deg, #1e1e1e, #3663a9); /* Gradiente escuro futurista */
     border-radius: 10px; /* Bordas mais suaves */
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.6), 0 0 20px rgba(0, 255, 255, 0.3) inset; /* Efeito de brilho */
-    border: 2px solid rgba(0, 255, 255, 0.8); /* Bordas neon */
+    /*box-shadow: 0 0 10px rgba(0, 255, 255, 0.6), 0 0 20px rgba(0, 255, 255, 0.3) inset;*/ /* Efeito de brilho */
+    /*border: 2px solid rgba(0, 255, 255, 0.8);*/ /* Bordas neon */
     color: #fff; /* Texto branco para contraste */
     font-weight: bold;
     text-transform: uppercase;
