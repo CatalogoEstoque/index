@@ -15,7 +15,7 @@
         <p id="total-count"></p>
         <h4><span id="filtered-count">0</span></h4>
 
-        <!--<button class="category" onclick="clearCategory()">Limpar Filtros</button>-->
+        <button class="category" onclick="clearCategory()">Limpar Filtros</button>
 
         <h3 style="text-align: center;">Categoria</h3>
         <div class="categories" id="categoryButtons">
@@ -61,8 +61,9 @@
     <div class="filters-container">
         <input type="text" id="filterCode" placeholder="Código" oninput="applyFilters()" style="width: 70px;">
         <input type="text" id="filterDescription" placeholder="Descrição" oninput="applyFilters()" style="width: 100px;">
+        <select id="filterEquipamento" onchange="applyFilters()" style="width: 120px;"> <option value="">Equipamento</option> </select>
         <input type="text" id="filterLocation" placeholder="Localização" oninput="applyFilters()" style="width: 80px;">
-        <input type="text" id="filterEquipamento" placeholder="Equipamento" oninput="applyFilters()" style="width: 100px;">
+        
    </div>
     
    <h1 style="text-align: left; margin-left: 160px; margin-top: 60px;">Catálogo de Produtos</h1>
