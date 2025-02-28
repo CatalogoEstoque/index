@@ -200,3 +200,84 @@ if (!localStorage.getItem("loggedIn")) {
     function zoomImage(img) {
         img.classList.toggle("zoom");
     }
+
+    // CARREGA A LISTA DE EQUIPAMENTOS PARA SEREM SELECIONADOS
+async function carregarEquipamentos() {
+        try {
+            // URL do arquivo Excel no GitHub
+            let url = "https://raw.githubusercontent.com/CatalogoEstoque/index/main/json.xlsx";
+
+            // Buscar o arquivo como um ArrayBuffer
+            let response = await fetch(url);
+            let data = await response.arrayBuffer();
+
+            // Ler o arquivo Excel
+            let workbook = XLSX.read(data, { type: "array" });
+
+            // Seleciona a primeira aba da planilha
+            let sheetName = workbook.SheetNames[0];
+            let sheet = workbook.Sheets[sheetName];
+
+            // Converte a planilha em JSON
+            let jsonData = XLSX.utils.sheet_to_json(sheet);
+
+            // Verifica se os dados estão corretos
+            if (!Array.isArray(jsonData)) {
+                console.error("Erro ao processar o arquivo XLSX!");
+                return;
+            }
+
+            let select = document.getElementById("filterEquipamento");
+
+            // Obtém os valores únicos da coluna "Equipamento", remove duplicatas e ordena
+            let equipamentos = [...new Set(jsonData.map(item => item.Equipamento))].sort();
+
+            // Preenche a caixa de seleção
+            equipamentos.forEach(equipamento => {
+                let option = document.createElement("option");
+                option.value = equipamento;
+                option.textContent = equipamento;
+                select.appendChild(option);
+            });
+
+        } catch (error) {
+            console.error("Erro ao carregar os dados:", error);
+        }
+    }
+
+    // Chama a função ao carregar a página
+    window.onload = carregarEquipamentos;
+
+/////////////////////////////////////////////////////////////////////////////////////////
+function clearFilters() {
+    // Resetando os valores das variáveis de filtro
+    selectedCategory = "";
+    selectedFormat = "";
+    selectedSector = "";
+
+    // Resetando os campos de entrada de texto
+    document.getElementById("filterCode").value = "";
+    document.getElementById("filterDescription").value = "";
+    document.getElementById("filterLocation").value = "";
+    document.getElementById("filterEquipamento").value = "";
+
+    // Resetando a exibição do filtro ativo
+    document.getElementById("active-filter").innerText = "Filtro ativo: Nenhum";
+
+    // Zerando a contagem de itens filtrados
+    document.getElementById("filtered-count").innerText ="0";
+
+    // Removendo a classe 'selected' de todos os botões de filtro
+    document.querySelectorAll(".category").forEach(button => {
+        button.classList.remove("selected");
+    });
+
+    // Resetando os filtros do Select (Dropdown) se existirem
+    let filterEquipamento = document.getElementById("filterEquipamento");
+    if (filterEquipamento) {
+        filterEquipamento.selectedIndex = 0; // Seleciona o primeiro item
+    }
+
+    // Recarregando a lista sem filtros
+    renderProducts(allProducts);
+}
