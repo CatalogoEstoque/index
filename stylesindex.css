@@ -147,7 +147,7 @@ h1 {
         }
 
 .product img.zoom {
-           transform: scale(4.0); /* Zoom */
+           transform: scale(6.0); /* Zoom */
            transform-origin: left; /* Faz o zoom a partir da esquerda */
            width: auto;
            height: auto;
