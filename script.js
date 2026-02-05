@@ -36,23 +36,18 @@ function parseCSV(csvData) {
 }
 
 // Função chamada ao clicar no botão de login
-
 function login() {
-    const user = document.getElementById("username").value;
-    const pass = document.getElementById("password").value;
-    const error = document.getElementById("error");
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
 
-    if (user === "catalogo" && pass === "catalogo") {
-        error.style.color = "green";
-        error.textContent = "Login bem-sucedido!";
-        // redirecionar se quiser:
-        // window.location.href = "home.html";
-    } else {
-        error.style.color = "red";
-        error.textContent = "Usuário ou senha incorretos!";
+    // Evita login sem usuário e senha
+    if (!username || !password) {
+        document.getElementById("error").innerText = "Preencha usuário e senha!";
+        return;
     }
-}
- 
+
+    validateLogin(username, password);
+}  
 
 // Função de validação de login
 async function validateLogin(username, password) {
@@ -70,7 +65,6 @@ async function validateLogin(username, password) {
         document.getElementById("error").innerText = "Usuário ou senha incorretos!";
     }
 }
-
 
 
 
