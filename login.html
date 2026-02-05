@@ -4,17 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="styles.css">
+    styles.css
 </head>
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <input type="text" id="username" placeholder="Usuário">
-        <input type="password" id="password" placeholder="Senha">
-        <button onclick="login()">Entrar</button>
-        <p id="error"></p>
+
+        index.html
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Usuário"
+                required
+                pattern="catalogo"
+                title="Digite: catalogo"
+                autocomplete="off"
+            >
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Senha"
+                required
+                pattern="catalogo"
+                title="Digite: catalogo"
+                autocomplete="off"
+            >
+
+            <button type="submit">Entrar</button>
+
+            <!-- Esse <p> pode ficar, mas sem JS ele não vai mostrar erro "customizado" -->
+            <p id="error"></p>
+        </form>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Removido: script.js</script> -->
 </body>
 </html>
+
