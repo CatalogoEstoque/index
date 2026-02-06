@@ -1,4 +1,4 @@
-<script>
+
 // Remove login salvo ao carregar a página
 window.onload = function () {
     localStorage.removeItem("loggedIn");
@@ -29,5 +29,6 @@ function login() {
         error.innerText = "Usuário ou senha incorretos!";
     }
 }
-</script>
+
+
 
