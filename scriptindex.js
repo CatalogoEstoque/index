@@ -1,7 +1,10 @@
-let allProducts = [];
+    let allProducts = [];
+    let filteredProductsGlobal = [];
     let selectedCategory = "";
     let selectedFormat = "";
     let selectedSector = "";
+    let itemsPerLoad = 20;
+    let currentIndex = 0;
 
     document.addEventListener("DOMContentLoaded", function () {
 
@@ -33,7 +36,9 @@ if (!localStorage.getItem("loggedIn")) {
                 allProducts = XLSX.utils.sheet_to_json(sheet);
 
                 // Exibir os produtos assim que o arquivo for carregado
-                renderProducts(allProducts);
+                filteredProductsGlobal = allProducts;
+
+loadMoreProducts();
             })
             .catch(error => console.error("Erro ao carregar o arquivo:", error));
     });
@@ -159,47 +164,140 @@ if (!localStorage.getItem("loggedIn")) {
     }
 
     // Ordena os produtos em ordem alfabética pelo campo TxtBreveMaterial
-    filteredProducts.sort((a, b) => a.TxtBreveMaterial.localeCompare(b.TxtBreveMaterial, undefined, { sensitivity: 'base' }));
+    filteredProducts.sort((a, b) => {
+
+    const nomeA =
+    (a.TxtBreveMaterial || "").toString();
+
+    const nomeB =
+    (b.TxtBreveMaterial || "").toString();
+
+    return nomeA.localeCompare(
+        nomeB,
+        undefined,
+        { sensitivity: 'base' }
+    );
+});
 
 	   
     document.getElementById("filtered-count").innerText = `Total Filtro: ${filteredProducts.length}`;
 
-    renderProducts(filteredProducts);
+    filteredProductsGlobal = filteredProducts;
+
+currentIndex = 0;
+
+document.getElementById("product-list").innerHTML = "";
+
+loadMoreProducts();
 }
 
+function loadMoreProducts() {
 
-    function renderProducts(products) {
-        const productList = document.getElementById("product-list");
+    const nextItems = filteredProductsGlobal.slice(
+        currentIndex,
+        currentIndex + itemsPerLoad
+    );
+
+    renderProducts(nextItems, true);
+
+    currentIndex += itemsPerLoad;
+}
+    function renderProducts(products, append = false) {
+    console.log(products);
+    const productList =
+    document.getElementById("product-list");
+
+    if (!append) {
         productList.innerHTML = "";
-
-        if (products.length === 0) {
-            productList.innerHTML = "<p>Nenhum produto encontrado.</p>";
-            return;
-        }
-
-        products.forEach(product => {
-    const div = document.createElement("div");
-    div.classList.add("product");
-    div.innerHTML = `
-        <img src="${product.Imagem ?? 'placeholder.jpg'}" onclick="zoomImage(this)">
-        <h2>${product.Material ?? 'Material não especificado'}</h2>
-        <div class="product-details">
-            <p>${product.TxtBreveMaterial ?? 'Descrição não disponível'}</p>
-            <span><strong>Unidade:</strong> ${product.UMB ?? 'N/A'}</span> &nbsp; | &nbsp;
-            <span><strong>Posição:</strong> ${product['Pos.dpst.'] ?? 'Localização não informada'}</span>
-            <p>${product.Equipamento ?? 'Equipamento não cadastrado'}</p>
-       </div>
-            `;
-            productList.appendChild(div);
-        });
-
-        console.log("Total de itens na lista:", allProducts.length);
-        document.getElementById("total-count").innerText = `Total de itens: ${allProducts.length}`;
     }
+
+    if (products.length === 0 && !append) {
+        productList.innerHTML =
+        "<p>Nenhum produto encontrado.</p>";
+        return;
+    }
+
+    products.forEach(product => {
+
+        const div =
+        document.createElement("div");
+
+        div.classList.add("product");
+
+        div.innerHTML = `
+            <img src="${product.Imagem ?? 'placeholder.jpg'}"
+                 onclick="zoomImage(this)">
+
+            <div class="product-details">
+
+                <h2>
+                    ${product.Material ?? 'Código'} -
+                    ${product.TxtBreveMaterial ?? 'Descrição'}
+                </h2>
+
+                <div class="info-row">
+
+                    <span>
+                        <strong>Unidade:</strong>
+                        ${product.UMB ?? 'N/A'}
+                    </span>
+
+                    <span>
+                        <strong>Posição:</strong>
+                        ${product['Pos.dpst.'] ?? 'N/A'}
+                    </span>
+
+                </div>
+
+                <div class="equipamento">
+                    ${product.Equipamento ??
+                    'Equipamento não cadastrado'}
+                </div>
+
+            </div>
+        `;
+
+        productList.appendChild(div);
+
+    });
+
+    document.getElementById("total-count")
+    .innerText =
+    `Total de itens: ${allProducts.length}`;
+}
 
     function zoomImage(img) {
-        img.classList.toggle("zoom");
+
+    // remove zoom antigo
+    const existente =
+    document.querySelector(".zoom-overlay");
+
+    if (existente) {
+        existente.remove();
+        return;
     }
+
+    // cria fundo escuro
+    const overlay =
+    document.createElement("div");
+
+    overlay.classList.add("zoom-overlay");
+
+    // cria imagem ampliada
+    const zoomedImg =
+    document.createElement("img");
+
+    zoomedImg.src = img.src;
+
+    overlay.appendChild(zoomedImg);
+
+    // fecha ao clicar
+    overlay.onclick = () => {
+        overlay.remove();
+    };
+
+    document.body.appendChild(overlay);
+}
 
     // CARREGA A LISTA DE EQUIPAMENTOS PARA SEREM SELECIONADOS
 async function carregarEquipamentos() {
@@ -246,38 +344,60 @@ async function carregarEquipamentos() {
     }
 
     // Chama a função ao carregar a página
-    window.onload = carregarEquipamentos;
+    window.addEventListener("load", carregarEquipamentos);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 function clearFilters() {
-    // Resetando os valores das variáveis de filtro
+
     selectedCategory = "";
     selectedFormat = "";
     selectedSector = "";
 
-    // Resetando os campos de entrada de texto
     document.getElementById("filterCode").value = "";
     document.getElementById("filterDescription").value = "";
     document.getElementById("filterLocation").value = "";
     document.getElementById("filterEquipamento").value = "";
 
-    // Resetando a exibição do filtro ativo
-    document.getElementById("active-filter").innerText = "Filtro ativo: Nenhum";
+    document.getElementById("active-filter").innerText =
+    "Filtro ativo: Nenhum";
 
-    // Zerando a contagem de itens filtrados
-    document.getElementById("filtered-count").innerText ="0";
+    document.getElementById("filtered-count").innerText =
+    `Total Filtro: ${allProducts.length}`;
 
-    // Removendo a classe 'selected' de todos os botões de filtro
     document.querySelectorAll(".category").forEach(button => {
         button.classList.remove("selected");
     });
 
-    // Resetando os filtros do Select (Dropdown) se existirem
-    let filterEquipamento = document.getElementById("filterEquipamento");
+    let filterEquipamento =
+    document.getElementById("filterEquipamento");
+
     if (filterEquipamento) {
-        filterEquipamento.selectedIndex = 0; // Seleciona o primeiro item
+        filterEquipamento.selectedIndex = 0;
     }
 
-    // Recarregando a lista sem filtros
-    renderProducts(allProducts);
+    filteredProductsGlobal = allProducts;
+
+    currentIndex = 0;
+
+    document.getElementById("product-list").innerHTML = "";
+
+    loadMoreProducts();
 }
+   
+
+window.addEventListener("scroll", () => {
+
+    if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 500
+    ) {
+
+        if (
+            currentIndex <
+            filteredProductsGlobal.length
+        ) {
+
+            loadMoreProducts();
+        }
+    }
+});
