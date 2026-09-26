@@ -16,10 +16,10 @@ if (!localStorage.getItem("loggedIn")) {
 } else {
     console.log("Usuário logado, mantendo na index.");
 }
-	    
+
 if (!localStorage.getItem("loggedIn")) {
         window.location.href = "login.html"; // Redireciona se não estiver logado
-    }     
+    }
        // URL do arquivo no GitHub
         const fileUrl = "https://raw.githubusercontent.com/CatalogoEstoque/index/main/json.xlsx";
 
@@ -179,7 +179,7 @@ loadMoreProducts();
     );
 });
 
-	   
+
     document.getElementById("filtered-count").innerText = `Total Filtro: ${filteredProducts.length}`;
 
     filteredProductsGlobal = filteredProducts;
@@ -383,7 +383,7 @@ function clearFilters() {
 
     loadMoreProducts();
 }
-   
+
 
 window.addEventListener("scroll", () => {
 
@@ -401,3 +401,30 @@ window.addEventListener("scroll", () => {
         }
     }
 });
+
+function toggleSidebar() {
+
+    const sidebar = document.getElementById("sidebar");
+    const button = document.getElementById("toggleSidebar");
+
+    if (!sidebar || !button) {
+        console.error("Sidebar ou botão não encontrado.");
+        return;
+    }
+
+    sidebar.classList.toggle("collapsed");
+    document.body.classList.toggle("sidebar-collapsed");
+
+    if (sidebar.classList.contains("collapsed")) {
+
+        // Barra fechada
+        button.innerHTML = "▶";
+        button.title = "Abrir barra lateral";
+
+    } else {
+
+        // Barra aberta
+        button.innerHTML = "◀";
+        button.title = "Recolher barra lateral";
+    }
+}
