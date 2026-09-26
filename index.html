@@ -12,12 +12,22 @@
 </head>
 
 <body>
+  <!-- conteúdo da sidebar -->
 
-    <div class="sidebar">
+  <button class="toggle-sidebar"
+          onclick="toggleSidebar()"
+          id="toggleSidebar"
+          title="Recolher barra lateral">
+      ◀
+  </button>
+  <div class="sidebar" id="sidebar">
 
-        <p id="active-filter">
-            <strong>Filtro ativo:</strong> Nenhum
-        </p>
+
+
+
+  <p id="active-filter">
+      <strong>Filtro ativo:</strong> Nenhum
+  </p>
 
         <p id="total-count"></p>
 
@@ -82,6 +92,13 @@
 
     <div class="filters-container">
 
+      <button class="toggle-sidebar"
+              onclick="toggleSidebar()"
+              id="toggleSidebar"
+              title="Recolher barra lateral">
+          ◀
+      </button>
+      
         <input type="text" id="filterCode" placeholder="Código" oninput="applyFilters()" style="width: 90px;">
 
         <input type="text" id="filterDescription" placeholder="Descrição" oninput="applyFilters()" style="width: 130px;">
